@@ -18,4 +18,16 @@ class CourseService {
       print("Error adding course: $e");
     }
   }
+
+  //get all courses from the database
+  Stream<List<Course>> get courses {
+    try {
+      return courseCollection.snapshots().map((snapshot) {
+        return snapshot.docs.map((doc)=> Course.fromJson(doc.data() as Map<String, dynamic>)).toList();
+      });
+    } catch (e) {
+      print("Error getting courses: $e");
+      return Stream.empty();
+    }
+  }
 }
