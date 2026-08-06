@@ -106,6 +106,12 @@ class MainPage extends StatelessWidget {
                             child: ListTile(
                               title: Text(course.name, style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
                               subtitle: Text(course.description, style: TextStyle(color: Colors.black54)),
+                              onTap: (){
+                                GoRouter.of(context).push(
+                                  '/single_course',
+                                  extra: course,
+                                );
+                              },
                             ),
                           );
                         },
