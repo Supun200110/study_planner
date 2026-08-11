@@ -51,7 +51,7 @@ class AddNewAssignment extends StatelessWidget {
 
   //Submit form
   void _submitForm(BuildContext context) async {
-    if (_formKey.currentState!.validate() ?? false) {
+    if (_formKey.currentState?.validate() ?? false) {
       print(_assignmentDescriptionController.text);
     }
   }

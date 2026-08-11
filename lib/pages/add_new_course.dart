@@ -38,7 +38,9 @@ class AddNewCourse extends StatelessWidget {
           showSnakbar(context: context, text:"Course added successfully");
         }
         await Future.delayed(Duration(seconds: 2));
-        GoRouter.of(context).go("/");
+        if(context.mounted) {
+          GoRouter.of(context).go("/");
+        }
       } catch (e) {
         if(context.mounted){
           showSnakbar(context: context, text:"Error adding course: $e");
