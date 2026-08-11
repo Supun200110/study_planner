@@ -16,15 +16,10 @@ class AddNewNote extends StatefulWidget {
 
 class _AddNewNoteState extends State<AddNewNote> {
   final _formKey = GlobalKey<FormState>();
-
   final TextEditingController _titleController = TextEditingController();
-
   final TextEditingController _descriptionController = TextEditingController();
-
   final TextEditingController _selectionController = TextEditingController();
-
   final TextEditingController _referencesController = TextEditingController();
-
   final ImagePicker _imagePicker = ImagePicker();
 
   XFile? _selectedImage;
@@ -36,6 +31,12 @@ class _AddNewNoteState extends State<AddNewNote> {
     setState(() {
       _selectedImage = image;
     });
+  }
+  
+   void _submitForm(BuildContext context) async {
+    if (_formKey.currentState?.validate() ?? false) {
+      print(_titleController.text);
+    }
   }
 
   @override
@@ -128,10 +129,19 @@ class _AddNewNoteState extends State<AddNewNote> {
                     ): Text("No image selected",style: TextStyle(
                       fontSize: 16,
                       color: Colors.grey,
-                    ),)
+                    ),),
+
+                    const SizedBox(height: 20),
+                    CoustomButton(
+                      text: "Submit Note", 
+                      onPressed: ()=>_submitForm(context),
+                      ),
+
                   ],
                 ),
+
               ),
+
             ],
           ),
         ),

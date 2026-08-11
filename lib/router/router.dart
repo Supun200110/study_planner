@@ -4,7 +4,7 @@ import 'package:study_planner/models/course_model.dart';
 import 'package:study_planner/pages/add_new_assignment.dart';
 import 'package:study_planner/pages/add_new_course.dart';
 import 'package:study_planner/pages/home_page.dart';
-import 'package:study_planner/pages/main_screens/add_new_note.dart';
+import 'package:study_planner/pages/add_new_note.dart';
 import 'package:study_planner/pages/single_course_page.dart';
 
 class RouterClass {
