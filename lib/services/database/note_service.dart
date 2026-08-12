@@ -38,5 +38,33 @@ class NoteService {
     }
     
   }
+  Stream<List<Note>> getNotes(String courseId){
+    try{
+      final CollectionReference notesCollection  = courseCollection.doc(courseId).collection("notes");
+      return notesCollection.snapshots().map((snapshot) => snapshot.docs.map((doc) => Note.fromJson(doc.data()as Map<String , dynamic>)).toList());
+    }catch(error){
+      print("Error fetching notes : $error");
+      return Stream.empty();
+    }
+    
+  }
+
+  Future<Map<String , dynamic>?>getNotesByCourseName()async{
+    try{
+      final QuerySnapshot snapShot = await courseCollection.get();
+      Map<String, List<Note>> notesMap = {};
+
+      for(final doc in snapShot.docs){
+        final String courseId = doc.id;
+        final List<Note> notes = await getNotes(courseId).first;
+        notesMap[doc["name"]] = notes;
+      }
+      return notesMap;
+    }catch(error){
+      print("Error fetching notes by course name : $error");
+      return {};
+    }
+  }
+  
 
 }

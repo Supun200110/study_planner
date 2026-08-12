@@ -20,4 +20,42 @@ class AssignmentService {
       print("Error creating assignment :$error");
     }
   }
+
+  Stream <List<Assignment>> getAssignments (String courseId){
+    try{
+       final CollectionReference assignmentCollection = courseCollection
+          .doc(courseId)
+          .collection("assignment");
+          return assignmentCollection.snapshots().map((snapshot){
+            return snapshot.docs.map((doc)=>Assignment.fromJson(doc.data()as Map<String,dynamic>)).toList();
+          });
+    }catch(error){
+      print("Error fetching assignments: $error");
+      return Stream.empty();
+      
+    }
+  }
+  
+  Future <Map<String,List<Assignment>>> getAssignmentWithCourseName()async{
+    try{
+     final QuerySnapshot snapShot = await courseCollection.get();
+     final Map<String,List<Assignment>> assignmentMap = {};
+
+     for(final doc in snapShot.docs){
+      final String courseId= doc.id;
+      final List<Assignment> assignments = await getAssignments(courseId).first;
+
+      assignmentMap[doc["name"]]=assignments;
+     }
+     
+     return assignmentMap;
+    }
+    catch(error){
+      print("Error fetching assignments: $error");
+      return {};
+    }
+  }
+
+
+  
 }
