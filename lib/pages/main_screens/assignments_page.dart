@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:study_planner/constants/colors.dart';
 import 'package:study_planner/models/assignment_model.dart';
 import 'package:study_planner/services/database/assignment_service.dart';
+import 'package:study_planner/services/database/notification_service.dart';
 import 'package:study_planner/widgets/countdown_timer.dart';
 
 class AssignmentsPage extends StatelessWidget {
@@ -12,10 +14,28 @@ class AssignmentsPage extends StatelessWidget {
     return await AssignmentService().getAssignmentWithCourseName();
   }
 
+  Future<void> _checkAndStoreOverdueAssignments() async{
+      await NotificationService().storeOverdueAssignments();
+
+  }
+
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _checkAndStoreOverdueAssignments();
+    });
     return Scaffold(
-      appBar: AppBar(title: const Text('Assignments')),
+      appBar: AppBar(
+        title: const Text('Assignments'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              GoRouter.of(context).push("/notifications");
+            },
+            icon: Icon(Icons.notifications),
+          ),
+        ],
+      ),
       body: FutureBuilder(
         future: _fetchAssignments(),
         builder: (context, snapshot) {

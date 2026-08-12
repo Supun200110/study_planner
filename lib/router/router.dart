@@ -7,6 +7,7 @@ import 'package:study_planner/pages/add_new_assignment.dart';
 import 'package:study_planner/pages/add_new_course.dart';
 import 'package:study_planner/pages/home_page.dart';
 import 'package:study_planner/pages/add_new_note.dart';
+import 'package:study_planner/pages/notifications_page.dart';
 import 'package:study_planner/pages/single_assignment.dart';
 import 'package:study_planner/pages/single_course_page.dart';
 import 'package:study_planner/pages/single_note_page.dart';
@@ -76,6 +77,13 @@ class RouterClass {
           return SingleAssignmentScreen(assignment: assignment);
         },
         ),
+        GoRoute(
+          path: "/notifications",
+          name: "notifications",
+          builder: (context, state) {
+            return NotificationsPage();
+          },
+          ),
     ],
   );
 }

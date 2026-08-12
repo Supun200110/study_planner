@@ -36,10 +36,16 @@ String _formatDuration(Duration duration){
   if(duration.inSeconds < 0){
     return "deadline passed";
   }
-  final hours = duration.inHours;
+  final days = duration.inDays;
+  final hours = duration.inHours % 24;
   final minutes = duration.inMinutes % 60;
   final seconds = duration.inSeconds % 60;
-  return "${hours.toString().padLeft(2,"0")}:${minutes.toString().padLeft(2,"0")}:${seconds.toString().padLeft(2,"0")}";
+  
+  if (days > 0) {
+    return "${days}d ${hours.toString().padLeft(2,"0")}:${minutes.toString().padLeft(2,"0")}:${seconds.toString().padLeft(2,"0")}";
+  } else {
+    return "${hours.toString().padLeft(2,"0")}:${minutes.toString().padLeft(2,"0")}:${seconds.toString().padLeft(2,"0")}";
+  }
 }
 
   @override
