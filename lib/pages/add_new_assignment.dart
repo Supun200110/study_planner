@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:study_planner/models/assignment_model.dart';
 import 'package:study_planner/models/course_model.dart';
-import 'package:study_planner/services/assignment_service.dart';
+import 'package:study_planner/services/database/assignment_service.dart';
 import 'package:study_planner/utils/util_functions.dart';
 import 'package:study_planner/widgets/coustom_button.dart';
 import 'package:study_planner/widgets/coustom_input.dart';

@@ -1,8 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:study_planner/models/course_model.dart';
+import 'package:study_planner/models/note_model.dart';
+import 'package:study_planner/services/database/note_service.dart';
+import 'package:study_planner/utils/util_functions.dart';
 import 'package:study_planner/widgets/coustom_button.dart';
 import 'package:study_planner/widgets/coustom_input.dart';
 
@@ -35,7 +39,26 @@ class _AddNewNoteState extends State<AddNewNote> {
   
    void _submitForm(BuildContext context) async {
     if (_formKey.currentState?.validate() ?? false) {
-      print(_titleController.text);
+      try{
+        final Note note = Note(
+          id: "",
+          title: _titleController.text,
+          description: _descriptionController.text,
+          section: _selectionController.text,
+          references: _referencesController.text,
+          imageUrl: _selectedImage?.path,
+          imageData: _selectedImage != null ? File(_selectedImage!.path) : null,
+        );
+        await NoteService().createNote(
+          note: note,
+          coureId: widget.course.id,
+        );
+        showSnakbar(context: context, text: "Note added successfully");
+        await Future.delayed(Duration(seconds: 2));
+       GoRouter.of(context).pop();
+      }catch(error){
+        showSnakbar(context: context, text: "Error adding note: $error");
+      }
     }
   }
 

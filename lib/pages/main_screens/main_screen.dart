@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:study_planner/constants/colors.dart';
-import 'package:study_planner/services/course_service.dart';
+import 'package:study_planner/services/database/course_service.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
